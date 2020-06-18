@@ -1,0 +1,251 @@
+<div class="card" style="width: 20rem;">
+    <div class="card-body">
+      <h5 class="card-title text-center">{{ teacher.firstName }} {{ teacher.lastName }}</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Nombre: {{ teacher.firstName }}</li>
+      <li class="list-group-item">Apellido: {{ teacher.lastName }}</li>
+      <li class="list-group-item">Fecha de Nacimiento {{ teacher.dateOfBirth | date  }}</li>
+    </ul>
+  </div>
+
+
+  <h1>Cursos</h1>
+
+<button type="button"
+                  class="btn btn-primary float-right mr-20"
+                  (click)="openModal(teacher.id)">
+            Agregar
+          </button>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Descripcion</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let course of courses">
+        <td>{{ course.id }}</td>
+        <td>{{ course.title }}</td>
+        <td>{{ course.description }}</td>
+        <td>
+          <button type="button"
+                  class="btn btn-primary mr-2"
+                  (click)="openEditCourseModal(course)">
+            Editar
+          </button>
+          <button type="button"
+                  class="btn btn-danger"
+                  (click)="deleteCourse(course.teacherId, course.id)">
+            Borrar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #AddContentModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <div class="modal-title w-100 text-center mb-0">
+        <i class="fas fa-search  fa-fw fa-2x pull-left text-primary"></i>
+        <span class="h4">Agregar Curso</span><br/>
+      </div>
+      <button type='button' class='close' data-dismiss='modal' aria-label='Close' (click)="d('Cross click')">
+        <span aria-hidden='true'>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12 text-left">
+          <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Nombre</label>
+                <input type="text" class="form-control" name="name" [(ngModel)]="title">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Descripcion</label>
+                <input type="text" class="form-control" name="lastname" [(ngModel)]="description">
+              </div>
+
+              <div class="form-group">
+                <input type="hidden" class="form-control" name="teacherId" [(ngModel)]="teacherId">
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger mr-20"
+              (click)="c('Close click')">
+        <i class="fas fa-ban fa-fw"></i> Cancelar
+      </button>
+      <button class="btn btn-success" (click)="addCourse()">
+        <i class="fas fa-check-circle fa-fw"></i> Guardar
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template #EditContentModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <div class="modal-title w-100 text-center mb-0">
+        <i class="fas fa-search  fa-fw fa-2x pull-left text-primary"></i>
+        <span class="h4">Editar Curso</span><br/>
+      </div>
+      <button type='button' class='close' data-dismiss='modal' aria-label='Close' (click)="d('Cross click')">
+        <span aria-hidden='true'>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12 text-left">
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nombre</label>
+              <input type="text" class="form-control" name="name" [(ngModel)]="editTitle">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Descripcion</label>
+              <input type="text" class="form-control" name="lastname" [(ngModel)]="editDescription">
+            </div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="teacherId" [(ngModel)]="editTeacherId">
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger mr-20"
+              (click)="c('Close click')">
+        <i class="fas fa-ban fa-fw"></i> Cancelar
+      </button>
+      <button class="btn btn-success" (click)="editCourse()">
+        <i class="fas fa-check-circle fa-fw"></i> Editar
+      </button>
+    </div>
+  </ng-template>
+
+
+  <h1>Estudiantes</h1>
+
+<button type="button"
+                  class="btn btn-primary float-right mb-25"
+                  (click)="openStudentModal()">
+            Agregar
+          </button>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Fecha de Nacimiento</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.id }}</td>
+            <td>{{ student.firstName }}</td>
+            <td>{{ student.lastName }}</td>
+            <td>{{ student.dateOfBirth | date  }}</td>
+            <td>
+              <button type="button"
+                      class="btn btn-primary mr-2"
+                      (click)="openEditStudent(student)">
+                Editar
+              </button>
+              <button type="button"
+                      class="btn btn-danger"
+                      (click)="deleteStudent(student.id)">
+                Borrar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #AddStudentModal let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <div class="modal-title w-100 text-center mb-0">
+            <i class="fas fa-search  fa-fw fa-2x pull-left text-primary"></i>
+            <span class="h4">Agregar Estudiante</span><br/>
+          </div>
+          <button type='button' class='close' data-dismiss='modal' aria-label='Close' (click)="d('Cross click')">
+            <span aria-hidden='true'>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 text-left">
+              <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Nombre</label>
+                  <input type="text" class="form-control" name="name" [(ngModel)]="addFirstName">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Apellido</label>
+                  <input type="text" class="form-control" name="lastname" [(ngModel)]="addLastName">
+                </div>
+                <div class="form-group">
+                  <label for="example-date-input">Date</label>
+                    <input class="form-control" type="date" name="date" [(ngModel)]="addDateOfBirth">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger mr-20"
+                  (click)="c('Close click')">
+            <i class="fas fa-ban fa-fw"></i> Cancelar
+          </button>
+          <button class="btn btn-success" (click)="addStudent()">
+            <i class="fas fa-check-circle fa-fw"></i> Guardar
+          </button>
+        </div>
+      </ng-template>
+    
+      <ng-template #EditStudentModal let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <div class="modal-title w-100 text-center mb-0">
+            <i class="fas fa-search  fa-fw fa-2x pull-left text-primary"></i>
+            <span class="h4">Editar Estudiante</span><br/>
+          </div>
+          <button type='button' class='close' data-dismiss='modal' aria-label='Close' (click)="d('Cross click')">
+            <span aria-hidden='true'>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 text-left">
+              <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Nombre</label>
+                  <input type="text" class="form-control" name="name" [(ngModel)]="editFirstName">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Apellido</label>
+                  <input type="text" class="form-control" name="lastname" [(ngModel)]="editLastName">
+                </div>
+                <div class="form-group">
+                  <label for="example-date-input">Date</label>
+                    <input class="form-control" type="date" name="date" [(ngModel)]="editDateOfBirth">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger mr-20"
+                  (click)="c('Close click')">
+            <i class="fas fa-ban fa-fw"></i> Cancelar
+          </button>
+          <button class="btn btn-success" (click)="editStudent()">
+            <i class="fas fa-check-circle fa-fw"></i> Editar
+          </button>
+        </div>
+      </ng-template>

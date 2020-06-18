@@ -24,9 +24,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
@@ -119,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "english-academy"
+    }
+  },
+  "defaultProject": "english-academy",
+  "cli": {
+    "analytics": false
+  }
 }
